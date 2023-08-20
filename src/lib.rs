@@ -1,6 +1,8 @@
 mod transaction;
 mod types;
 mod error;
+mod table;
+mod btree;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
