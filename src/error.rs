@@ -23,7 +23,7 @@ impl Display for Error {
 
 #[derive(Debug)]
 pub enum TransactionError{
-    Storage,
+    Storage(StorageError),
 }
 
 #[derive(Debug)]
@@ -33,5 +33,32 @@ pub enum StorageError{
     Io(std::io::Error),
     LockPoisoned(&'static str),
 }
+
+#[derive(Debug)]
+pub enum TableError{
+    TableMisMatch,
+    Storage(StorageError),
+}
+
+#[derive(Debug)]
+pub enum DatabaseError{
+    DatabaseAlreadyOpen,
+    UpgradeRequired(u8),
+    Storage(StorageError),
+}
+
+
+#[derive(Debug)]
+pub enum SavepointError{
+
+}
+
+#[derive(Debug)]
+pub enum CompactionError{
+    PersistentSavepointExists,
+    Storage(StorageError),
+}
+
+
 
 
