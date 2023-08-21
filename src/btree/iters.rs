@@ -1,6 +1,7 @@
 use std::marker::PhantomData;
+use std::sync::{Arc, Mutex};
 use crate::btree::iters::RangeIterState::Leaf;
-use crate::btree::page_store::{PageImpl, TxnMemory};
+use crate::btree::page_store::{PageImpl, PageNumber, TxnMemory};
 use crate::types::{XDBKey, XDBValue};
 
 #[derive(Debug)]
@@ -23,6 +24,7 @@ use crate::types::{XDBKey, XDBValue};
 
 impl<'a> RangeIterState<'a> {
     fn next(self,reverse:bool,mem:&'a TxnMemory)->Result<Option<RangeIterState>>{
+        unimplemented!();
         match self {
             Leaf{
                 page,
@@ -51,4 +53,15 @@ pub(crate) struct BTreeRangeIters<'a,K:XDBKey+'static,V:XDBValue+'static>{
     mem:&'a TxnMemory,
     _key_type:PhantomData<K>,
     _value_type:PhantomData<V>,
+}
+
+impl<'a,K:XDBKey,> BTreeRangeIters<'a, K, V> {
+
+}
+
+pub(crate) struct BTreeDrain<'a,K:XDBKey+'static,V:XDBValue+'static>{
+    inner:BTreeRangeIters<'a,K,V>,
+    free_on_drop:Vec<PageNumber>,
+    master_free_list:Arc<Mutex<Vec<PageNumber>>>,
+    mem:&'a TxnMemory,
 }
