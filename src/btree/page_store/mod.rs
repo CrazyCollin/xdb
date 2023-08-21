@@ -4,4 +4,5 @@ mod base;
 mod header;
 
 pub(crate) use page_manager::{TxnMemory};
-pub(crate) use base::{PageNumber};
+pub(crate) use base::{PageNumber,PageImpl};
+
